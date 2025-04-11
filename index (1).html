@@ -1,0 +1,70 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>가평군 버스 안내</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 50px;
+    }
+    h1 {
+      font-size: 2em;
+    }
+    select, button {
+      font-size: 1em;
+      padding: 10px;
+      margin: 10px;
+    }
+    #result {
+      margin-top: 20px;
+      font-size: 1.2em;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <h1>🚍 가평군 버스 경로 안내</h1>
+  <p>출발지와 도착지를 선택하면 경로를 안내해드립니다.</p>
+
+  <label for="start">출발지:</label>
+  <select id="start">
+    <option value="가평터미널">가평터미널</option>
+    <option value="청평역">청평역</option>
+    <option value="설악면사무소">설악면사무소</option>
+    <option value="상면면사무소">상면면사무소</option>
+    <option value="조종면사무소">조종면사무소</option>
+  </select>
+
+  <br />
+
+  <label for="end">도착지:</label>
+  <select id="end">
+    <option value="가평터미널">가평터미널</option>
+    <option value="청평역">청평역</option>
+    <option value="설악면사무소">설악면사무소</option>
+    <option value="상면면사무소">상면면사무소</option>
+    <option value="조종면사무소">조종면사무소</option>
+  </select>
+
+  <br />
+  <button onclick="showRoute()">경로 보기</button>
+
+  <div id="result"></div>
+
+  <script>
+    function showRoute() {
+      const start = document.getElementById('start').value;
+      const end = document.getElementById('end').value;
+      if (start === end) {
+        document.getElementById('result').innerText = '출발지와 도착지가 같습니다!';
+      } else {
+        document.getElementById('result').innerText = `경로: ${start} → ${end}`;
+      }
+    }
+  </script>
+</body>
+</html>
