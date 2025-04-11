@@ -1,68 +1,93 @@
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>가평군 버스 안내</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>가평 버스 시간표</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding: 50px;
+      font-family: 'Arial', sans-serif;
+      background: #f5f8ff;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px;
     }
     h1 {
-      font-size: 2em;
+      color: #2c3e50;
     }
     select, button {
-      font-size: 1em;
+      font-size: 16px;
       padding: 10px;
       margin: 10px;
     }
     #result {
-      margin-top: 20px;
-      font-size: 1.2em;
-      color: #333;
+      margin-top: 30px;
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      width: 300px;
+      text-align: center;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
     }
   </style>
 </head>
 <body>
-  <h1>🚍 가평군 버스 경로 안내</h1>
-  <p>출발지와 도착지를 선택하면 경로를 안내해드립니다.</p>
+  <h1>가평 버스 시간표</h1>
 
-  <label for="start">출발지:</label>
-  <select id="start">
+  <label for="departure">출발지:</label>
+  <select id="departure">
     <option value="가평터미널">가평터미널</option>
-    <option value="청평역">청평역</option>
-    <option value="설악면사무소">설악면사무소</option>
-    <option value="상면면사무소">상면면사무소</option>
-    <option value="조종면사무소">조종면사무소</option>
   </select>
 
-  <br />
-
-  <label for="end">도착지:</label>
-  <select id="end">
-    <option value="가평터미널">가평터미널</option>
-    <option value="청평역">청평역</option>
-    <option value="설악면사무소">설악면사무소</option>
-    <option value="상면면사무소">상면면사무소</option>
-    <option value="조종면사무소">조종면사무소</option>
+  <label for="arrival">도착지:</label>
+  <select id="arrival">
+    <option value="설악터미널">설악터미널</option>
+    <option value="청평터미널">청평터미널</option>
+    <option value="남이섬">남이섬</option>
   </select>
 
-  <br />
-  <button onclick="showRoute()">경로 보기</button>
+  <button onclick="showTimetable()">시간표 보기</button>
 
   <div id="result"></div>
 
   <script>
-    function showRoute() {
-      const start = document.getElementById('start').value;
-      const end = document.getElementById('end').value;
-      if (start === end) {
-        document.getElementById('result').innerText = '출발지와 도착지가 같습니다!';
+    const timetable = {
+      "가평터미널-설악터미널": [
+        "07:50", "09:00", "10:50", "12:40",
+        "14:00", "14:50", "15:50", "17:00",
+        "18:00", "19:40"
+      ],
+      "가평터미널-청평터미널": [
+        "06:40", "07:45", "08:45", "10:30",
+        "12:30", "14:00", "15:40", "17:10",
+        "17:40", "18:30"
+      ],
+      "가평터미널-남이섬": [
+        "07:50", "08:50", "09:50", "10:40",
+        "11:20", "11:50", "12:15", "12:30",
+        "13:20", "14:20", "14:50", "15:20",
+        "15:50", "16:50", "17:50", "18:20",
+        "18:40", "19:20", "19:40", "19:50"
+      ]
+    };
+
+    function showTimetable() {
+      const departure = document.getElementById('departure').value;
+      const arrival = document.getElementById('arrival').value;
+      const key = `${departure}-${arrival}`;
+      const resultDiv = document.getElementById('result');
+
+      if (timetable[key]) {
+        const times = timetable[key].map(time => `<li>${time}</li>`).join('');
+        resultDiv.innerHTML = `<h3>${departure} → ${arrival} 시간표</h3><ul>${times}</ul>`;
       } else {
-        document.getElementById('result').innerText = `경로: ${start} → ${end}`;
+        resultDiv.innerHTML = `<p>해당 경로의 시간표가 없습니다.</p>`;
       }
     }
   </script>
